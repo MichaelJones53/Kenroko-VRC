@@ -1,0 +1,6 @@
+framework module Pods_Kenroko_VRC {
+  umbrella header "Pods-Kenroko VRC-umbrella.h"
+
+  export *
+  module * { export * }
+}

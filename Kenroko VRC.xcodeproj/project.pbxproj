@@ -281,6 +281,8 @@
 		DA808E16200A792900C06782 /* IntroMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA808E15200A792900C06782 /* IntroMessageViewController.swift */; };
 		DA808E18200A79E200C06782 /* RaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA808E17200A79E200C06782 /* RaceViewController.swift */; };
 		DA8BC9871FEEC61E00E26304 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8BC9861FEEC61E00E26304 /* ProfileViewController.swift */; };
+		DA91FFF42049D4BC00850A7C /* RunSignUpRegisteredRaceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA91FFF32049D4BC00850A7C /* RunSignUpRegisteredRaceParser.swift */; };
+		DA91FFF62049D50B00850A7C /* RegisteredRaceProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA91FFF52049D50B00850A7C /* RegisteredRaceProfile.swift */; };
 		DAA07BD91FDDB0C90008D8EF /* birthday_image.png in Resources */ = {isa = PBXBuildFile; fileRef = DAA07BD81FDDB0C80008D8EF /* birthday_image.png */; };
 		DAB0971C1FD758E7005FAD60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB0971B1FD758E7005FAD60 /* AppDelegate.swift */; };
 		DAB0971E1FD758E7005FAD60 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB0971D1FD758E7005FAD60 /* ViewController.swift */; };
@@ -292,7 +294,14 @@
 		DAB097341FD75D95005FAD60 /* kenroko_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB097331FD75D95005FAD60 /* kenroko_logo.png */; };
 		DAB097381FD7659E005FAD60 /* email_image.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB097361FD7659E005FAD60 /* email_image.png */; };
 		DAB097391FD7659E005FAD60 /* password_image.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB097371FD7659E005FAD60 /* password_image.png */; };
+		DAB52ACC20473270001012A9 /* RunSignUpRaceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB52ACB20473270001012A9 /* RunSignUpRaceParser.swift */; };
+		DAB52ACE204732C0001012A9 /* RaceProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB52ACD204732C0001012A9 /* RaceProfile.swift */; };
 		DABCE8C4201BA74E00EF519A /* RaceResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABCE8C3201BA74E00EF519A /* RaceResult.swift */; };
+		DACC98612041D1EE00EA011F /* RunSignUpUserParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACC98602041D1EE00EA011F /* RunSignUpUserParser.swift */; };
+		DAE798EA205584A300D1D6A9 /* KenrokoRaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE798E9205584A300D1D6A9 /* KenrokoRaceViewController.swift */; };
+		DAE798EC205584B700D1D6A9 /* KenrokoProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE798EB205584B700D1D6A9 /* KenrokoProfileViewController.swift */; };
+		DAE798EE205584C500D1D6A9 /* KenrokoLeaderboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE798ED205584C500D1D6A9 /* KenrokoLeaderboardViewController.swift */; };
+		DAE798F02055A2F000D1D6A9 /* RunSignUpUserRaceResultParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE798EF2055A2F000D1D6A9 /* RunSignUpUserRaceResultParser.swift */; };
 		DAFB97BF1FE4AA1A00B009A6 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFB97BE1FE4AA1A00B009A6 /* TextField.swift */; };
 /* End PBXBuildFile section */
 
@@ -588,6 +597,8 @@
 		DA808E15200A792900C06782 /* IntroMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroMessageViewController.swift; sourceTree = "<group>"; };
 		DA808E17200A79E200C06782 /* RaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceViewController.swift; sourceTree = "<group>"; };
 		DA8BC9861FEEC61E00E26304 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		DA91FFF32049D4BC00850A7C /* RunSignUpRegisteredRaceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunSignUpRegisteredRaceParser.swift; sourceTree = "<group>"; };
+		DA91FFF52049D50B00850A7C /* RegisteredRaceProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteredRaceProfile.swift; sourceTree = "<group>"; };
 		DAA07BD81FDDB0C80008D8EF /* birthday_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = birthday_image.png; sourceTree = "<group>"; };
 		DAB097181FD758E7005FAD60 /* Kenroko VRC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kenroko VRC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB0971B1FD758E7005FAD60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -601,8 +612,15 @@
 		DAB097331FD75D95005FAD60 /* kenroko_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kenroko_logo.png; sourceTree = "<group>"; };
 		DAB097361FD7659E005FAD60 /* email_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = email_image.png; sourceTree = "<group>"; };
 		DAB097371FD7659E005FAD60 /* password_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = password_image.png; sourceTree = "<group>"; };
+		DAB52ACB20473270001012A9 /* RunSignUpRaceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunSignUpRaceParser.swift; sourceTree = "<group>"; };
+		DAB52ACD204732C0001012A9 /* RaceProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceProfile.swift; sourceTree = "<group>"; };
 		DABCE8C3201BA74E00EF519A /* RaceResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceResult.swift; sourceTree = "<group>"; };
+		DACC98602041D1EE00EA011F /* RunSignUpUserParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunSignUpUserParser.swift; sourceTree = "<group>"; };
 		DADB5C021FE59233008D8189 /* Kenroko VRC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Kenroko VRC.entitlements"; sourceTree = "<group>"; };
+		DAE798E9205584A300D1D6A9 /* KenrokoRaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KenrokoRaceViewController.swift; sourceTree = "<group>"; };
+		DAE798EB205584B700D1D6A9 /* KenrokoProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KenrokoProfileViewController.swift; sourceTree = "<group>"; };
+		DAE798ED205584C500D1D6A9 /* KenrokoLeaderboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KenrokoLeaderboardViewController.swift; sourceTree = "<group>"; };
+		DAE798EF2055A2F000D1D6A9 /* RunSignUpUserRaceResultParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunSignUpUserRaceResultParser.swift; sourceTree = "<group>"; };
 		DAFB97BE1FE4AA1A00B009A6 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -937,6 +955,8 @@
 			isa = PBXGroup;
 			children = (
 				DAB0972E1FD75962005FAD60 /* UserProfile.swift */,
+				DA91FFF52049D50B00850A7C /* RegisteredRaceProfile.swift */,
+				DAB52ACD204732C0001012A9 /* RaceProfile.swift */,
 				DAB0972D1FD75962005FAD60 /* GradientView.swift */,
 				DA33C4131FDAF10B00D301D3 /* Validator.swift */,
 				DA588D141FDEE673006BF9C8 /* ViewControllerUtils.swift */,
@@ -945,6 +965,10 @@
 				DA1B62A020168B9D00365826 /* RunSignUp.swift */,
 				DABCE8C3201BA74E00EF519A /* RaceResult.swift */,
 				DA657200201D9365008CC483 /* RunSignUpRace.swift */,
+				DACC98602041D1EE00EA011F /* RunSignUpUserParser.swift */,
+				DAB52ACB20473270001012A9 /* RunSignUpRaceParser.swift */,
+				DA91FFF32049D4BC00850A7C /* RunSignUpRegisteredRaceParser.swift */,
+				DAE798EF2055A2F000D1D6A9 /* RunSignUpUserRaceResultParser.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -976,16 +1000,27 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		DAE798E82055820E00D1D6A9 /* OldVCs */ = {
+			isa = PBXGroup;
+			children = (
+				DA2664A41FEDA70100D08E20 /* GoalsViewController.swift */,
+				DA8BC9861FEEC61E00E26304 /* ProfileViewController.swift */,
+				DA808E17200A79E200C06782 /* RaceViewController.swift */,
+			);
+			path = OldVCs;
+			sourceTree = "<group>";
+		};
 		DAFCF68E1FD84C3D0079B53E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				DAB0971D1FD758E7005FAD60 /* ViewController.swift */,
 				DA69A5371FDDA2EE004A1BE0 /* EmailAndPassViewController.swift */,
 				DA69A5391FDDA34F004A1BE0 /* UIViewController+Additions.swift */,
-				DA2664A41FEDA70100D08E20 /* GoalsViewController.swift */,
-				DA8BC9861FEEC61E00E26304 /* ProfileViewController.swift */,
+				DAE798E82055820E00D1D6A9 /* OldVCs */,
 				DA808E15200A792900C06782 /* IntroMessageViewController.swift */,
-				DA808E17200A79E200C06782 /* RaceViewController.swift */,
+				DAE798E9205584A300D1D6A9 /* KenrokoRaceViewController.swift */,
+				DAE798EB205584B700D1D6A9 /* KenrokoProfileViewController.swift */,
+				DAE798ED205584C500D1D6A9 /* KenrokoLeaderboardViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1407,18 +1442,27 @@
 				DA2664A51FEDA70100D08E20 /* GoalsViewController.swift in Sources */,
 				DAB0971E1FD758E7005FAD60 /* ViewController.swift in Sources */,
 				DAB0971C1FD758E7005FAD60 /* AppDelegate.swift in Sources */,
+				DAE798EE205584C500D1D6A9 /* KenrokoLeaderboardViewController.swift in Sources */,
+				DAB52ACE204732C0001012A9 /* RaceProfile.swift in Sources */,
+				DAE798EA205584A300D1D6A9 /* KenrokoRaceViewController.swift in Sources */,
+				DAE798EC205584B700D1D6A9 /* KenrokoProfileViewController.swift in Sources */,
 				DAFB97BF1FE4AA1A00B009A6 /* TextField.swift in Sources */,
 				DA588D151FDEE673006BF9C8 /* ViewControllerUtils.swift in Sources */,
+				DA91FFF42049D4BC00850A7C /* RunSignUpRegisteredRaceParser.swift in Sources */,
+				DAE798F02055A2F000D1D6A9 /* RunSignUpUserRaceResultParser.swift in Sources */,
 				DA1B62A120168B9D00365826 /* RunSignUp.swift in Sources */,
 				DA808E16200A792900C06782 /* IntroMessageViewController.swift in Sources */,
 				DABCE8C4201BA74E00EF519A /* RaceResult.swift in Sources */,
 				DA2664A71FEDA9EE00D08E20 /* Date+additons.swift in Sources */,
 				DAB0972F1FD75962005FAD60 /* GradientView.swift in Sources */,
+				DAB52ACC20473270001012A9 /* RunSignUpRaceParser.swift in Sources */,
+				DA91FFF62049D50B00850A7C /* RegisteredRaceProfile.swift in Sources */,
 				DA657201201D9365008CC483 /* RunSignUpRace.swift in Sources */,
 				DA69A53A1FDDA34F004A1BE0 /* UIViewController+Additions.swift in Sources */,
 				DA8BC9871FEEC61E00E26304 /* ProfileViewController.swift in Sources */,
 				DA808E18200A79E200C06782 /* RaceViewController.swift in Sources */,
 				DA33C4141FDAF10B00D301D3 /* Validator.swift in Sources */,
+				DACC98612041D1EE00EA011F /* RunSignUpUserParser.swift in Sources */,
 				DA69A5381FDDA2EE004A1BE0 /* EmailAndPassViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

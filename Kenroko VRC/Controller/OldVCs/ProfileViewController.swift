@@ -20,6 +20,7 @@ class ProfileViewController: UIViewController{
     var utils = ViewControllerUtils()
     
     
+    
     @IBAction func logOutClicked(_ sender: UIButton) {
         print("log out clicked");
         // log out user
@@ -30,6 +31,7 @@ class ProfileViewController: UIViewController{
     
     
     override func viewWillAppear(_ animated: Bool) {
+        
         
         print("viewwillappear entered and ended")
     }
@@ -50,7 +52,26 @@ class ProfileViewController: UIViewController{
                 let firstName = userData?["firstName"] as? String ?? "unknown"
                 let lastName = userData?["lastName"] as? String ?? ""
                 let code = userData?["CountryCode"] as? String ?? "US"
-                let profilePic = userData?["profileImage"] as? String ?? ""
+                
+               
+                //get user runsignup data
+                
+                RunSignUp.getRunSignUpUser(success: { (results) in
+                    let userParser = RunSignUpUserParser()
+                    let temp = UserProfile()
+                    userParser.parseUserResults(toUser: temp, withResults: results)
+                    
+                    let userRef = self.ref.child("users").child((Auth.auth().currentUser?.uid)!)
+                    
+                    userRef.updateChildValues(["profileImage":temp.profileImage!])
+                    
+                }, failure: { (string) in
+                    print(string)
+                })
+               
+               let profilePic = userData?["profileImage"] as? String ?? ""
+                
+                
                 
                 let name = "\(firstName) \(lastName)"
                 
@@ -101,7 +122,7 @@ class ProfileViewController: UIViewController{
     // style navigation
     func styleNavigation(){
         self.navigationController?.navigationBar.isHidden = true
-        self.navigationController!.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.isTranslucent = true
     }
     
     func styleProfileImageView(){
@@ -114,6 +135,10 @@ class ProfileViewController: UIViewController{
         
     }
     
+    func loadRegisteredRaceData(){
+        
+        
+    }
     
     
     

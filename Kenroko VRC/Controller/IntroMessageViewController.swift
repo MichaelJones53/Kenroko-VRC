@@ -11,7 +11,6 @@ import Firebase
 
 class IntroMessageViewController: UIViewController {
     
-    var ref: DatabaseReference!
     var showAgain = true
     
     @IBOutlet weak var dontShowButton: UIButton!
@@ -37,7 +36,6 @@ class IntroMessageViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        ref = Database.database().reference()
         setupClickBox()
         
     }
@@ -56,23 +54,9 @@ class IntroMessageViewController: UIViewController {
     }
     
     func updateUserShowPromptChoice(){
-        if let uid = Auth.auth().currentUser?.uid{
-            ref.child("users/\(uid)/ShowPrompt").setValue(showAgain)
-            
-        }else{
-            print("no uid")
-        }
+        UserDefaults.standard.set(false, forKey: "showPrompt")
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
     private func setupClickBox(){
         dontShowButton.layer.borderColor = UIColor.black.cgColor

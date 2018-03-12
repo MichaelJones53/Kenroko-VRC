@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
+    
+    var ref: DatabaseReference!
     var handle: AuthStateDidChangeListenerHandle?
     let util = ViewControllerUtils()
     
@@ -29,12 +31,45 @@ class ViewController: UIViewController {
             util.showActivityIndicator(uiView: self.view)
             
             Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
-                self.util.hideActivityIndicator(uiView: self.view)
-                
                 if error != nil {
+                    self.util.hideActivityIndicator(uiView: self.view)
                     self.displayError(error: "Invalid Credentials")
                     return
                 }
+                
+                UserDefaults.standard.set(true, forKey: "showPrompt")
+                
+                if let userID = user?.uid{
+                    
+                    self.ref.child("users").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+                        let userData = snapshot.value as? NSDictionary
+                        
+                        if let oauthToken = userData?["runSignUpOauthToken"] as? String, let oauthSecretToken = userData?["runSignUpOauthSecret"] as? String{
+                            //add token to user defaults
+                            UserDefaults.standard.set(oauthToken, forKey: "oauthToken")
+                            UserDefaults.standard.set(oauthSecretToken, forKey: "oauthSecretToken")
+                        }else{
+                            self.displayError(error: "Something Went Wrong...")
+                            do{
+                            try Auth.auth().signOut()
+                            }catch{
+                                
+                            }
+                        }
+                    })
+                    
+                    
+                    
+                }
+                
+                
+                
+                
+                
+                
+                
+                
+                self.util.hideActivityIndicator(uiView: self.view)
             }
         }
         
@@ -52,7 +87,7 @@ class ViewController: UIViewController {
                 
                 if let _ = error{
                     self.displayError(error: "Invalid or unregistered email address")
-
+                    
                 }else{
                     let alertController = UIAlertController(title: "Password Reset", message:
                         "An email will be sent to \(email) with reset directions", preferredStyle: UIAlertControllerStyle.alert)
@@ -74,6 +109,8 @@ class ViewController: UIViewController {
     //***************VIEW METHODS***************
     override func viewDidLoad() {
         super.viewDidLoad()
+        ref = Database.database().reference()
+        
         addKeyboardRelease()
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -91,7 +128,16 @@ class ViewController: UIViewController {
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
             // TODO...
             if let _ = user{
+                RunSignUp.setCredentials()
+                
                 self.performSegue(withIdentifier: "segueToMainMenu", sender: nil)
+                //                do{
+                //                    try auth.signOut()
+                //
+                //                }catch{
+                //
+                //                }
+                
             }
         }
         
@@ -117,7 +163,7 @@ class ViewController: UIViewController {
     // style navigation
     func styleNavigation(){
         self.navigationController?.navigationBar.isHidden = true
-        self.navigationController!.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.isTranslucent = true
     }
     
     // fades in error label

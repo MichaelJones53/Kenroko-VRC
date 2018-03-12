@@ -7,9 +7,13 @@
 //
 
 class RaceResult{
-    var firstName = ""
-    var lastName = ""
+    var firstName : String?
+    var lastName : String?
     var country = "US"
-    var clockTime = ""
-    var userID = ""
+    var clockTime : String?
+    var userID : String?
+    var raceName : String?
+    var raceDate : String?
+    var racePace : String?
+    var racePosition : String?
 }

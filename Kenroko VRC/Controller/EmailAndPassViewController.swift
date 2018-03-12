@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class EmailAndPassViewController: UIViewController, XMLParserDelegate{
+class EmailAndPassViewController: UIViewController{
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -18,7 +18,6 @@ class EmailAndPassViewController: UIViewController, XMLParserDelegate{
     @IBOutlet weak var linkRunSignUpButton: UIButton!
     
     var isLinked = false
-    var runSignUp = RunSignUp()
     var newUser = UserProfile()
     let util = ViewControllerUtils()
     var ref: DatabaseReference!
@@ -29,13 +28,22 @@ class EmailAndPassViewController: UIViewController, XMLParserDelegate{
         
         if(!sessionOpen){
             self.sessionOpen = true
-            runSignUp.authorize(completion: { (credentials) in
+            RunSignUp.authorize(completion: { (credentials) in
                 self.newUser.runSignUpOauthToken = credentials.oauthToken
                 self.newUser.runSignUpOauthSecret = credentials.oauthTokenSecret
+                
+                //add token to user defaults
+                UserDefaults.standard.set(credentials.oauthToken, forKey: "oauthToken")
+                UserDefaults.standard.set(credentials.oauthTokenSecret, forKey: "oauthSecretToken")
+                
+                RunSignUp.setCredentials(withToken: credentials.oauthToken, withSecret: credentials.oauthTokenSecret)
+                
                 //get user
-                self.runSignUp.getRunSignUpUser(success: { (userData) in
+                RunSignUp.getRunSignUpUser(success: { (userData) in
                     //parse info and store in newUser
-                    self.parseUserResults(withResults: userData)
+                    let userParser = RunSignUpUserParser()
+                    userParser.parseUserResults(toUser: self.newUser, withResults: userData)
+
                     self.isLinked = true
                     
                 }, failure: { (err) in
@@ -44,13 +52,12 @@ class EmailAndPassViewController: UIViewController, XMLParserDelegate{
                 })
                 
             }) { (error) in
-                self.runSignUp.oauthswift.removeCallbackNotificationObserver()
+                RunSignUp.shared.oauthswift.removeCallbackNotificationObserver()
                 self.displayError(error: error)
                 print(error)
             }
             
         }else{
-            runSignUp = RunSignUp()
             sessionOpen = false
         }
     }
@@ -72,6 +79,7 @@ class EmailAndPassViewController: UIViewController, XMLParserDelegate{
         ref = Database.database().reference()
         linkRunSignUpButton.layer.cornerRadius = 7
         styleNavigation(title: "Registration")
+        self.navigationController?.navigationBar.isHidden = false;
     }
     
     
@@ -89,7 +97,7 @@ class EmailAndPassViewController: UIViewController, XMLParserDelegate{
         }else{
             util.showActivityIndicator(uiView: self.view)
             newUser.email = emailTextField.text!
-    
+            
             Auth.auth().fetchProviders(forEmail: emailTextField.text!, completion: { (providers, errors) in
                 self.util.hideActivityIndicator(uiView: self.view)
                 if let error = errors{
@@ -108,8 +116,8 @@ class EmailAndPassViewController: UIViewController, XMLParserDelegate{
                                 self.displayError(error: error.localizedDescription)
                                 
                             }else{
+                                UserDefaults.standard.set(true, forKey: "showPrompt")
                                 //create DB field for user
-                                
                                 let userRef = self.ref.child("users").child((user?.uid)!)
                                 let userData = self.newUser.dictionaryOfUser()
                         
@@ -148,60 +156,6 @@ class EmailAndPassViewController: UIViewController, XMLParserDelegate{
     
     func clearError(){
         errorLabel.alpha = 0
-    }
-    //*************XMLPARSER Delegate functions/vars******************
-
-    
-    var foundCharacters = ""
-    
-    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
-    
-    }
-    
-    
-    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        print("found element: \(elementName)")
-        
-        if(elementName == "first_name"){
-            self.newUser.firstName = foundCharacters
-        }else if(elementName == "last_name"){
-            self.newUser.lastName = foundCharacters
-        }else if(elementName == "gender"){
-            self.newUser.gender = foundCharacters
-        }else if(elementName == "user_id"){
-            self.newUser.runSignUpUserID = foundCharacters
-        }else if(elementName == "street"){
-            self.newUser.street = foundCharacters
-        }else if(elementName == "city"){
-            self.newUser.city = foundCharacters
-        }else if(elementName == "state"){
-            self.newUser.state = foundCharacters
-        }else if(elementName == "zipcode"){
-            self.newUser.zipcode = foundCharacters
-        }else if(elementName == "country_code"){
-            self.newUser.countryCode = foundCharacters
-        }else if(elementName == "dob"){
-            self.newUser.birthDate = foundCharacters
-        }else if(elementName == "phone"){
-            self.newUser.phone = foundCharacters
-        }else if(elementName == "profile_image_url"){
-            self.newUser.profileImage = foundCharacters
-        }
-        
-        foundCharacters = ""
-    }
-    
-    func parser(_ parser: XMLParser, foundCharacters string: String) {
-        
-        self.foundCharacters = string
-    }
-    private func parseUserResults(withResults results: String){
-        let xmlData = results.data(using: String.Encoding.utf8)
-        let parser = XMLParser(data: xmlData!)
-        
-        parser.delegate = self
-        
-        parser.parse()
     }
     
 }

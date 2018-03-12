@@ -10,6 +10,8 @@ import Foundation
 import OAuthSwift
 
 class RunSignUp{
+    static let shared = RunSignUp()
+    
     static let RUNSIGNUPGETURL = "https://runsignup.com/rest/"
     static let REGISTERED_RACES = "\(RUNSIGNUPGETURL)user/registered-races"
     static let COUNTRIES = "\(RUNSIGNUPGETURL)countries"
@@ -24,6 +26,8 @@ class RunSignUp{
     static let requestTokenEndpointURL = "https://runsignup.com/oauth/requestToken.php"
     static let accessTokenEndpointURL = "https://runsignup.com/oauth/accessToken.php"
     
+
+    
     let oauthswift = OAuth1Swift(
         consumerKey:    oauthKey,
         consumerSecret: oauthSecret,
@@ -34,9 +38,12 @@ class RunSignUp{
     
     
     
+    private init(){
+        
+    }
     
     
-    func runSignUpGetCountries(address: String, completion: @escaping (String)->()){
+    static func runSignUpGetCountries(address: String, completion: @escaping (String)->()){
         let session = openGETSession()
         let req = createGETURLRequest(address: RunSignUp.COUNTRIES)
         
@@ -57,9 +64,10 @@ class RunSignUp{
     
     
     
-    func getRunSignUpUser(success: @escaping (String)->(), failure: @escaping (String)->()){
+    static func getRunSignUpUser(success: @escaping (String)->(), failure: @escaping (String)->()){
         
-        _ = oauthswift.client.get("https://runsignup.com/rest/user/", success: { (results) in
+        
+        _ = shared.oauthswift.client.get("https://runsignup.com/rest/user/", success: { (results) in
             
             success(results.dataString()!)
             
@@ -69,14 +77,15 @@ class RunSignUp{
         }
     }
     
+
+   
     
-    
-    
-    func getKenrokoRaces(success: @escaping (String)->(), failure: @escaping (String)->()){
+    static func getUpcommingKenrokoRaces(success: @escaping (String)->(), failure: @escaping (String)->()){
         
-        let filter = ["start_date": "2017-01-01", "name":"Kenroko", "events": "T"]
         
-        _ = oauthswift.client.get("https://runsignup.com/Rest/races/?", parameters: filter, success: { (results) in
+        let filter = ["start_date": getCurrentDateEST(), "name":"Kenroko", "events": "T"]
+        
+        _ = shared.oauthswift.client.get("https://runsignup.com/Rest/races/?", parameters: filter, success: { (results) in
             success(results.dataString()!)
         }) { (err) in
             failure(err.localizedDescription)
@@ -84,9 +93,33 @@ class RunSignUp{
         
     }
     
-    func runSignUpGetRegisteredRaces(completion: @escaping (String)->()){
+   private static func getCurrentDateEST()->String{
+    
+        let today = NSDate()
         
-        _ = oauthswift.client.get(RunSignUp.REGISTERED_RACES, success: { (response) in
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.timeZone = TimeZone(abbreviation: "EST")
+        let estDate = formatter.string(from: today as Date)
+        
+        return (estDate.description)
+        
+    }
+    static func getKenrokoRaces(success: @escaping (String)->(), failure: @escaping (String)->()){
+        
+        let filter = ["start_date": "2017-01-01", "name": "Kenroko", "events": "T"]
+        
+        _ = shared.oauthswift.client.get("https://runsignup.com/Rest/races/?", parameters: filter, success: { (results) in
+            success(results.dataString()!)
+        }) { (err) in
+            failure(err.localizedDescription)
+        }
+        
+    }
+    
+    static func runSignUpGetRegisteredRaces(completion: @escaping (String)->()){
+        
+        _ = shared.oauthswift.client.get(RunSignUp.REGISTERED_RACES, success: { (response) in
             //handle success
             completion(response.dataString()!)
             
@@ -100,11 +133,11 @@ class RunSignUp{
         
     }
     
-    func runSignUpGetRaceResults(withRaceID raceID: Int, withEventID eventID: Int, success: @escaping (String)->(),  failure: @escaping (String)->()){
+    static func runSignUpGetRaceResults(withRaceID raceID: Int, withEventID eventID: Int, success: @escaping (String)->(),  failure: @escaping (String)->()){
         
         let param = ["event_id": eventID]
         
-        _ = oauthswift.client.get("https://runsignup.com/rest/race/\(raceID)/results/get-results", parameters: param, success: { (results) in
+        _ = shared.oauthswift.client.get("https://runsignup.com/rest/race/\(raceID)/results/get-results", parameters: param, success: { (results) in
             success(results.dataString()!)
             
         }) { (error) in
@@ -114,32 +147,39 @@ class RunSignUp{
         }
         
         
-        
-        
-        
     }
     
-    private func createGETURLRequest(address: String)-> URLRequest{
+    
+    
+    private static func createGETURLRequest(address: String)-> URLRequest{
         var req = URLRequest(url: URL(string: address)!)
         req.httpMethod = "GET"
         return req
     }
     
-    private func openGETSession()->URLSession{
+    private static func openGETSession()->URLSession{
         
         let session = URLSession.shared
         
         return session
     }
     
-    func setCredentials(withToken token: String, withSecret secret: String){
-        oauthswift.client.credential.oauthToken = token
-        oauthswift.client.credential.oauthTokenSecret = secret
+    static func setCredentials(withToken token: String, withSecret secret: String){
+        shared.oauthswift.client.credential.oauthToken = token
+        shared.oauthswift.client.credential.oauthTokenSecret = secret
     }
     
-    func authorize(completion: @escaping (OAuthSwiftCredential)->(), error: @escaping (String)->()){
+    static func setCredentials(){
+        shared.oauthswift.client.credential.oauthToken = UserDefaults.standard.string(forKey: "oauthToken")!
+        shared.oauthswift.client.credential.oauthTokenSecret = UserDefaults.standard.string(forKey: "oauthSecretToken")!
         
-        oauthswift.authorize(
+        
+    }
+    
+    static func authorize(completion: @escaping (OAuthSwiftCredential)->(), error: @escaping (String)->()){
+        
+        
+        shared.oauthswift.authorize(
             withCallbackURL: URL(string: RunSignUp.callbackURL)!,
             success: { credential, response, parameters in
                 
